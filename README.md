@@ -25,3 +25,6 @@ Built with Kotlin, Jetpack Compose, and Material Design 3.
 Disclaimer
 
 MiruNest is an independent personal project and is not affiliated with or endorsed by MyAnimeList.
+
+## Privacy
+Read the [Privacy Policy](PRIVACY.md).

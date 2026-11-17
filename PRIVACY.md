@@ -1,66 +1,75 @@
 MiruNest - Privacy Policy
 
-Last updated: November 16, 2026
+Last updated: November 17, 2026
 
 1. Introduction
 
 MiruNest is a personal, non-commercial Android application developed for anime tracking and personal anime library management.
 
-The application is intended for private use on the developer's own Android devices and is not currently distributed to the public.
+The application is currently intended for private use on the developer's own Android devices and is not publicly distributed.
 
-MiruNest is an independent project and is not affiliated with or endorsed by MyAnimeList.
+MiruNest is an independent project and is not affiliated with, sponsored by, or endorsed by MyAnimeList.
 
 2. Current Development Status
 
-MiruNest is currently under development.
+MiruNest is under active development.
 
-The current development version uses local demonstration data and does not yet connect to MyAnimeList or access personal MyAnimeList account information.
+Version 0.2 supports MyAnimeList authentication, profile retrieval, encrypted local session storage, session persistence, token refresh, and logout.
 
-The privacy policy will be updated as new features are implemented.
+The Home and Library features currently use demonstration data. Integration with the user's actual anime library, including watch progress synchronization, is planned for future versions.
 
 3. MyAnimeList Integration
 
-Future versions of MiruNest will use the official MyAnimeList API to provide:
+MiruNest uses the official MyAnimeList API and OAuth authorization system.
 
-- Authentication through MyAnimeList OAuth
-- Access to the user's MyAnimeList profile
-- Anime library and watch progress synchronization
-- Anime search and information retrieval
-- Watch status and episode progress management
+The current version can:
 
-Authentication will be handled through the official MyAnimeList authorization process.
+- Open the official MyAnimeList authorization page in the device's browser.
+- Authenticate the user without accessing or storing their MyAnimeList password.
+- Retrieve the authenticated user's profile, including username and profile image when available.
+- Maintain and refresh the authenticated session.
+- Remove locally stored authentication credentials when the user logs out.
 
-MiruNest will not request or store the user's MyAnimeList password.
+Future versions may support anime library retrieval, anime search, watch progress synchronization, ratings, and anime status management.
+
+MiruNest does not currently modify the user's MyAnimeList anime library.
 
 4. Data Access and Usage
 
-When MyAnimeList integration is enabled, MiruNest may access the following information as necessary for its features:
+The current version accesses MyAnimeList profile information required to identify and display the authenticated account.
 
-- MyAnimeList account identifier and username
-- Personal anime library
-- Anime watch status and episode progress
-- Personal anime ratings
-- Anime information, including titles, descriptions, genres, images and related metadata
+It also processes authentication tokens and temporary OAuth authorization data to maintain a working connection with MyAnimeList.
 
-This information will be used exclusively to provide the application's anime tracking and library management features.
+Future versions may access the following information through the official API:
+
+- Personal anime library entries
+- Anime watch statuses and watched episode counts
+- Personal ratings and list update information
+- Anime titles, descriptions, genres, images, and other available metadata
+
+This information will be used exclusively to provide MiruNest's intended functionality.
 
 5. Data Storage
 
-MiruNest does not operate a proprietary backend server for collecting or storing user information.
+MiruNest does not operate its own backend server for collecting or storing MyAnimeList account information.
 
-Future versions may temporarily store necessary MyAnimeList data locally on the user's Android device to improve performance and provide cached access.
+Authentication tokens and temporary OAuth authorization data are stored locally on the Android device using AES-GCM encryption backed by Android Keystore.
 
-Authentication tokens will be handled using appropriate Android security mechanisms.
+Authentication storage is excluded from Android backup mechanisms.
 
-Local data storage and backup behavior will be reviewed as these features are implemented.
+The current version does not maintain a persistent local database of the user's MyAnimeList anime library.
 
-6. Data Sharing
+Future versions may introduce limited, temporary on-device caching to improve performance and usability. This policy will be updated when such functionality is implemented.
 
-MiruNest is not designed to sell personal information or share user data with advertisers.
+6. Data Sharing and External Services
 
-No advertising or third-party analytics services are planned.
+MiruNest does not sell personal information and does not currently include advertising or third-party analytics services.
 
-When MyAnimeList integration is enabled, the application will communicate directly with MyAnimeList through its official API for authentication, data retrieval and authorized account updates.
+The application communicates with MyAnimeList's official services for authentication and authorized profile retrieval.
+
+Profile images may be loaded from image URLs supplied by MyAnimeList.
+
+Authentication is completed through the device's browser, which manages its own browsing data and sessions independently of MiruNest.
 
 MyAnimeList processes information according to its own privacy policy:
 
@@ -68,32 +77,34 @@ https://myanimelist.net/about/privacy_policy
 
 7. Data Retention and Deletion
 
-Locally stored data will be retained only as reasonably necessary for the application's functionality.
+Authentication credentials remain stored locally until the user logs out, clears the application's data, or removes the application.
 
-Future versions will provide session management and appropriate mechanisms for clearing locally stored account information.
+Logging out removes MiruNest's locally stored authentication credentials. It does not necessarily revoke tokens on MyAnimeList's servers or sign the user out of the browser.
 
-Users can also remove local application data through Android system settings or by uninstalling the application, subject to applicable Android backup behavior.
+Users can remove application data through Android system settings or by uninstalling the application, subject to the applicable Android storage and backup mechanisms.
 
-Removing local data from MiruNest does not automatically delete information stored in a MyAnimeList account.
+Deleting MiruNest data does not delete or alter information stored on MyAnimeList.
 
 8. Security
 
-MiruNest is designed to follow standard Android security practices.
+MiruNest uses the official OAuth authorization process, including PKCE and authorization state validation.
 
-The application will not intentionally disclose authentication tokens, passwords or other sensitive credentials to third parties.
+Sensitive authentication information is protected using Android Keystore-backed encryption.
 
-Security protections will be implemented and verified as MyAnimeList integration is developed.
+The application is designed to avoid exposing authentication tokens or account credentials in application logs.
+
+As a development project, MiruNest may receive further security improvements as its functionality evolves.
 
 9. Changes to This Policy
 
 This Privacy Policy may be updated as MiruNest evolves.
 
-Changes will be published in this GitHub repository.
+Changes will be published in this GitHub repository, including updates when additional MyAnimeList data access or local storage features are introduced.
 
 10. Contact
 
-For questions regarding this Privacy Policy or the MiruNest project, please use the GitHub repository:
+For questions regarding MiruNest or this Privacy Policy, please visit:
 
 https://github.com/Mikiz13/mirunest-info
 
-Please do not publish passwords, access tokens or other sensitive information in public GitHub issues.
+Please do not publish passwords, authentication tokens, authorization codes, or other sensitive information in public GitHub issues.

@@ -14,11 +14,13 @@ MiruNest is an independent project and is not affiliated with, sponsored by, or 
 
 MiruNest is under active development.
 
-Version 0.3 supports MyAnimeList authentication, profile retrieval, secure session management, and read-only access to the authenticated user's anime library.
+**Version 0.4** supports MyAnimeList authentication, profile retrieval, secure session management, and read-only access to the authenticated user's anime library.
 
 The Home and Library screens display real anime data retrieved from MyAnimeList. The Discover screen currently contains clearly identified demonstration content.
 
-Editing watch progress, anime statuses, and ratings is not yet supported for MyAnimeList data.
+Version 0.4 also includes a protected episode synchronization preview. This feature allows the user to preview a potential increase in watched episodes without submitting an update.
+
+**Real anime library modifications remain disabled in the current protected version.**
 
 ## 3. MyAnimeList Integration
 
@@ -33,23 +35,34 @@ The current version can:
 - Display anime titles, cover images, watch statuses, watched episode counts, total episodes, personal ratings, and available alternative titles.
 - Search, filter, and sort previously retrieved library entries locally.
 - Refresh the anime library and display connection errors.
+- Preview an increase of one watched episode without submitting any modification to MyAnimeList.
 - Log out and clear locally stored authentication credentials and in-memory library data.
 
 MiruNest does not request or store the user's MyAnimeList password.
 
-**Version 0.3 does not modify the user's MyAnimeList anime library.**
+**Version 0.4 runs with MyAnimeList write operations disabled.** Previewing an episode increment does not change the user's anime library.
 
-Future versions may introduce watch progress synchronization, status management, anime search, and additional anime information.
+Future versions may enable controlled watch progress synchronization, status management, anime search, and additional anime information.
 
 ## 4. Data Access and Usage
 
 MiruNest accesses information authorized through the user's MyAnimeList account.
 
-This includes account profile information, authentication tokens, anime library entries, watch statuses, episode progress, personal ratings, update timestamps, titles, and cover image URLs.
+This includes:
 
-Information is used only to provide the application's anime tracking and library functionality.
+- Account profile information.
+- Authentication tokens and temporary authorization data.
+- Personal anime library entries.
+- Anime watch statuses and watched episode counts.
+- Total episode counts and personal ratings.
+- Library update timestamps.
+- Anime titles, alternative titles, and cover image URLs.
 
-MiruNest does not collect personal information for advertising or analytics.
+This information is used exclusively to provide the application's anime tracking and library functionality.
+
+Episode synchronization previews are calculated using available anime progress information.
+
+MiruNest does not currently collect personal information for advertising or analytics.
 
 ## 5. Data Storage
 
@@ -59,17 +72,19 @@ Authentication tokens and temporary OAuth authorization data are encrypted local
 
 Authentication storage is excluded from Android backup mechanisms.
 
-In version 0.3, anime library records are retained in application memory during use and are not stored in a persistent local anime database.
+In version 0.4, anime library records are retained in application memory during use and are not stored in a persistent local anime database.
 
 Image-loading components may use temporary memory or disk caching managed by their underlying libraries. Offline availability of cover images is not guaranteed.
 
-Future versions may introduce a local database or additional caching functionality. This policy will be updated when those features are introduced.
+Future versions may introduce a local database or additional caching functionality. This policy will be updated when such features are implemented.
 
 ## 6. Data Sharing and External Services
 
 MiruNest does not sell personal information and does not currently include advertising or third-party analytics services.
 
-The application communicates with official MyAnimeList services for authentication and authorized anime library retrieval.
+The application communicates with official MyAnimeList services for authentication and authorized data retrieval.
+
+In the current protected version, episode synchronization previews do not transmit anime library modifications to MyAnimeList.
 
 Anime cover images and profile images are loaded from URLs provided by MyAnimeList, which may be served through image-hosting infrastructure.
 
@@ -99,15 +114,19 @@ Sensitive authentication information is protected through Android Keystore-backe
 
 The application is designed to avoid exposing authentication tokens or account credentials in logs.
 
-**Version 0.3 retrieves MyAnimeList library data in read-only mode.**
+Version 0.4 includes safeguards for future episode synchronization, including validation of episode limits, remote progress verification, duplicate-request prevention, and error handling.
 
-As the application evolves, additional security measures may be implemented and this policy updated accordingly.
+**The current protected build keeps real MyAnimeList write operations disabled.**
+
+These safeguards do not guarantee protection against every possible error or concurrent modification. Additional verification will be performed before enabling real synchronization.
 
 ## 9. Changes to This Policy
 
 This Privacy Policy may be updated as MiruNest evolves.
 
 Changes will be published in this GitHub repository, particularly when new data access, synchronization, or persistent storage features are introduced.
+
+**This policy will be updated to describe real write operations before episode synchronization is enabled for actual use.**
 
 ## 10. Contact
 

@@ -14,31 +14,29 @@ MiruNest is an independent project and is not affiliated with, sponsored by, or 
 
 MiruNest is under active development.
 
-**Version 0.4** supports MyAnimeList authentication, profile retrieval, secure session management, and access to the authenticated user's anime library.
+**Version 0.4.1** supports authentication, profile retrieval, personal anime library access, and protected episode synchronization.
 
 Home and Library display real anime data retrieved through the official MyAnimeList API.
 
 The Discover screen currently contains clearly identified demonstration content.
 
-Version 0.4 includes an episode synchronization feature with a protected preview mode.
+**The current protected build has all MyAnimeList write operations disabled.**
 
-**Normal builds keep MyAnimeList write operations disabled.**
-
-A separately configured, temporary test build may enable a strictly limited episode update after explicit user confirmation.
+A separate daily synchronization mode has been implemented but is not yet enabled in the protected build.
 
 ## 3. MyAnimeList Integration
 
 MiruNest uses the official MyAnimeList API and OAuth authorization system.
 
-The application supports:
+Current features include:
 
 - Authentication through the official MyAnimeList authorization process.
-- Retrieval of the authenticated user's profile.
+- Retrieval of account profile information.
 - Secure local authentication session management.
 - Authentication token refresh.
 - Retrieval of personal anime library entries.
-- Display of anime titles, cover images, watch statuses, episode counts, personal ratings, and available alternative titles.
-- Local searching, filtering, and sorting of retrieved anime.
+- Display of anime titles, cover images, watch statuses, episode counts, personal ratings, and alternative titles.
+- Local searching, filtering, and sorting.
 - Manual library refreshing.
 - Episode increment previews.
 - Protected episode synchronization testing.
@@ -46,23 +44,39 @@ The application supports:
 
 MiruNest does not request or store the user's MyAnimeList password.
 
-### Controlled Episode Synchronization
+### Episode Synchronization
 
-When explicitly enabled in a temporary test build, MiruNest may update the watched episode count of one specifically authorized anime.
+MiruNest includes functionality designed to update watched episode counts using the official MyAnimeList API.
 
-This operation uses the official MyAnimeList API endpoint:
+When synchronization is explicitly enabled, an authorized update may be sent through:
 
 `PATCH /anime/{anime_id}/my_list_status`
 
-Only the `num_watched_episodes` field is submitted for the controlled update.
+The update submits only the `num_watched_episodes` field.
 
-The application requires explicit user confirmation before sending the update.
+Each update requires explicit user confirmation.
 
-The controlled test includes restrictions on the selected anime, expected episode count, target episode count, and permitted write attempt.
+The application checks the remote anime progress before attempting an update.
 
-A successful update changes the user's watch progress stored on MyAnimeList.
+Synchronization does not automatically change personal ratings, comments, or anime list statuses.
 
-The application does not automatically modify personal ratings, comments, or other anime list fields during this test.
+### Controlled Testing
+
+MiruNest previously completed a controlled synchronization test involving one specifically authorized anime.
+
+The controlled test used a restricted configuration and a persistent local attempt record to prevent repeated submissions.
+
+The controlled testing mechanism remains separate from normal daily synchronization.
+
+### Daily Episode Synchronization
+
+When enabled in a future build, daily synchronization will allow users to update eligible anime without configuring an individual anime ID in advance.
+
+Each update will require confirmation and validation of the current remote progress.
+
+The application is designed to prevent duplicate submissions and automatic retries after uncertain results.
+
+**Daily synchronization remains disabled in the current protected build.**
 
 ## 4. Data Access and Usage
 
@@ -71,15 +85,15 @@ MiruNest accesses information authorized through the user's MyAnimeList account,
 - Account profile information.
 - Authentication tokens and temporary OAuth authorization data.
 - Personal anime library entries.
-- Watched episode counts and anime statuses.
+- Anime watch statuses and watched episode counts.
 - Total episode counts.
-- Personal anime ratings.
+- Personal ratings.
 - Library update timestamps.
 - Anime titles, alternative titles, and cover image URLs.
 
-This information is used exclusively for the application's anime tracking and library functionality.
+This information is used exclusively to provide the application's anime tracking and library functionality.
 
-Controlled synchronization may transmit an updated episode count to MyAnimeList after explicit user confirmation.
+When synchronization is enabled and the user confirms an update, MiruNest transmits the authorized watched episode count to MyAnimeList.
 
 MiruNest does not collect personal information for advertising or analytics.
 
@@ -91,15 +105,15 @@ Authentication tokens and temporary OAuth authorization data are encrypted local
 
 Authentication storage is excluded from Android backup mechanisms.
 
-Anime library records are retained in application memory and are not stored in a persistent local anime database.
+Anime library information is retained in application memory and is not currently maintained in a persistent local anime database.
 
-Image-loading components may use memory or disk caching managed by their underlying libraries. Offline cover image availability is not guaranteed.
+Image-loading components may use temporary memory or disk caching managed by their underlying libraries. Offline availability of cover images is not guaranteed.
 
-For controlled synchronization testing, the application maintains a private local record indicating whether the permitted write attempt has been used.
+MiruNest uses private local synchronization records to track controlled write attempts and potentially unresolved daily synchronization operations.
 
-This record is intended to prevent repeated write attempts within the same application installation.
+These records help prevent duplicate updates and support recovery after uncertain results.
 
-The record is not an absolute guarantee against repeated requests following application data deletion, reinstallation, or modification.
+Local safeguards cannot guarantee protection against all concurrent modifications or data loss caused by clearing application storage or reinstalling the application.
 
 ## 6. Data Sharing and External Services
 
@@ -107,9 +121,9 @@ MiruNest does not sell personal information and does not currently include adver
 
 The application communicates with official MyAnimeList services for authentication, authorized information retrieval, and explicitly enabled episode synchronization.
 
-Anime cover images and profile images are loaded from URLs provided by MyAnimeList and may be served through image-hosting infrastructure.
+Anime cover images and profile images are loaded from URLs provided by MyAnimeList, which may be served through image-hosting infrastructure.
 
-Authentication uses the device's browser, which manages its own sessions separately from MiruNest.
+Authentication uses the device's browser, which manages its own sessions independently of MiruNest.
 
 MyAnimeList processes information according to its own privacy policy:
 
@@ -123,13 +137,13 @@ Logging out removes locally stored authentication credentials and clears the in-
 
 Logging out does not necessarily revoke tokens on MyAnimeList's servers or terminate the separate browser session.
 
-Controlled test records may remain stored locally after logout to prevent reuse of a write attempt.
+Some local synchronization safety records may remain after logout to prevent unintended repeated write attempts.
 
 Users can remove application data through Android system settings or by uninstalling MiruNest, subject to applicable Android storage and backup behavior.
 
 Removing local MiruNest data does not delete information stored on MyAnimeList.
 
-Changes successfully synchronized to MyAnimeList remain associated with the user's MyAnimeList account.
+Successfully synchronized changes remain associated with the user's MyAnimeList account.
 
 ## 8. Security
 
@@ -139,27 +153,27 @@ Sensitive authentication information is protected using Android Keystore-backed 
 
 The application is designed to avoid exposing authentication tokens or account credentials in logs.
 
-Controlled episode synchronization includes:
+Episode synchronization safeguards include:
 
 - Explicit user confirmation.
-- Anime identity and title validation.
 - Remote progress verification before writing.
-- Episode count validation.
-- Restrictions on permitted write operations.
-- Duplicate-request prevention.
-- A persistent local record of the write attempt.
-- Error and timeout handling.
+- Validation of eligible anime and episode counts.
+- Prevention of simultaneous write operations.
+- Protection against duplicate submissions.
+- Private records for unresolved synchronization operations.
+- Read-only verification following uncertain results.
 - Restrictions against automatic write retries.
+- Protection against stale responses following logout or account changes.
 
-These protections reduce the risk of unintended modifications but do not eliminate all possible risks.
+These safeguards reduce the risk of unintended modifications but cannot eliminate all possible errors.
 
-In particular, remote verification and a subsequent update are not an atomic transaction. Concurrent modifications by other clients may still occur.
+In particular, a remote read followed by an update is not an atomic transaction. Concurrent modifications by other clients remain possible.
 
 ## 9. Changes to This Policy
 
 This Privacy Policy may be updated as MiruNest evolves.
 
-Changes will be published in this GitHub repository, particularly when additional synchronization features, persistent storage, or other data-processing capabilities are introduced.
+Changes will be published in this GitHub repository, especially when new synchronization, local storage, or data-processing capabilities are introduced.
 
 ## 10. Contact
 

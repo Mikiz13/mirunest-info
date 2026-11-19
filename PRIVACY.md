@@ -72,13 +72,13 @@ The controlled testing mechanism remains separate from normal daily synchronizat
 
 ### Daily Episode Synchronization
 
-When enabled in a future build, daily synchronization will allow users to update eligible anime without configuring an individual anime ID in advance.
+Daily episode synchronization is available in explicitly enabled personal builds and allows users to update eligible anime without configuring an individual anime ID.
 
-Each update will require confirmation and validation of the current remote progress.
+Each update requires explicit user confirmation and validation of the current remote progress.
 
 The application is designed to prevent duplicate submissions and automatic retries after uncertain results.
 
-**Daily synchronization remains disabled in the current protected build.**
+Daily synchronization is disabled by default in standard project builds and enabled only through a separate local configuration.
 
 ## 4. Data Access and Usage
 

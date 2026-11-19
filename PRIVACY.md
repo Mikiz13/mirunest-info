@@ -14,15 +14,15 @@ MiruNest is an independent project and is not affiliated with, sponsored by, or 
 
 MiruNest is under active development.
 
-**Version 0.4.1** supports authentication, profile retrieval, personal anime library access, and protected episode synchronization.
+**Version 0.5** supports authentication, profile retrieval, personal anime library access, protected episode synchronization, and real anime catalog discovery.
 
 Home and Library display real anime data retrieved through the official MyAnimeList API.
 
-The Discover screen currently contains clearly identified demonstration content.
+The Discover screen uses the official MyAnimeList API to search the anime catalog and retrieve detailed anime information, including titles, alternative titles, cover images, synopses, episode counts, publication information, scores, genres, and studios, where available.
 
-**The current protected build has all MyAnimeList write operations disabled.**
+Anime catalog discovery is read-only. Searching for or viewing an anime does not add it to the user's library or modify MyAnimeList account data.
 
-A separate daily synchronization mode has been implemented but is not yet enabled in the protected build.
+Daily episode synchronization remains available in explicitly enabled personal builds, with user confirmation required before each update. Default project builds retain write operations disabled.
 
 ## 3. MyAnimeList Integration
 
@@ -41,6 +41,8 @@ Current features include:
 - Episode increment previews.
 - Protected episode synchronization testing.
 - Logout and local authentication credential removal.
+- Search of the official MyAnimeList anime catalog.
+- Retrieval and display of detailed anime information through official MyAnimeList read-only API endpoints.
 
 MiruNest does not request or store the user's MyAnimeList password.
 
